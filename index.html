@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <form action="https://form2mail.iolab.sk/form2mail.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" id="formId">
+        <input type="hidden" name="apikey" value="3a87da1ed199bb1773b606dba160c762">
+        <input type="hidden" name="from" value="xdemeterj@stuba.sk">
+        <input type="hidden" name="sender" value="Jan Demeter">
+        <input type="hidden" name="to" value=""> 
+        <!-- Pri odovzdani nezabudnut zmenit mail na feistu... podla cviciaceho -->
+        <input type="hidden" name="subject" value="Formular WEBTE">
+        <input type="hidden" name="redirectOk" value="https://webte1.fei.stuba.sk/~xdemeterj/vranov/succes.html">
+        <input type="hidden" name="redirectFalse" value="https://webte1.fei.stuba.sk/~xdemeterj/vranov/failure.html">
+        <div class="form-group">
+            <div class="left_column">
+                <div class="label-container">
+                    <label for="firstName">*Meno:</label>
+                    <span class="counter" id="firstNameCounter">0/20</span>
+                </div>
+                <input type="text" id="firstName" placeholder="napr. Juraj" name="firstName"
+                    onkeyup="validateIsEmpty('Meno je povinne', 'firstName', 'err-firstName'); numberCounter();">
+                <span class="err-msg default-hidden" id="err-firstName">.</span>
+
+                <div class="label-container">
+                    <label for="surname">*Priezvisko</label>
+                    <span class="counter" id="surnameCounter">0/20</span>
+                </div>
+                <input type="text" id="surname" placeholder="napr. Rudolf" name="surname"
+                    onkeyup="validateIsEmpty('Priezvisko je povinne', 'surname', 'err-surname'); numberCounter();">
+                <span class="err-msg default-hidden" id="err-surname">.</span>
+
+                <!-- Email -->
+                <label for="email">*Email:</label>
+                <input type="email" id="email" placeholder="napr. juraj.rudolf@stuba.sk" name="email"
+                    onkeyup="validateIsEmpty('Email je povinny', 'email', 'err-email')">
+                <span class="err-msg default-hidden" id="err-email">.</span>
+
+                <!-- Date of Birth -->
+                <label for="birthdate">*Datum narodenia:</label>
+                <input type="date" id="birthdate" name="birthdate">
+                <span class="err-msg default-hidden" id="err-birthdate">.</span>
+
+                <!-- Age -->
+                <label for="age">Vek:</label>
+                <input type="number" id="age" name="age" disabled>
+
+
+                <!-- Gender Dropdown -->
+                <label for="gender">Pohlavie:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Muz</option>
+                    <option value="female">Zena</option>
+                </select><br><br>
+
+
+
+                <!-- Phone number -->
+                <label for="predvolba">*Telefonne číslo:</label>
+                <select id="predvolba" name="predvolba">
+                    <option value="+421">+421</option> <!-- Slovensko -->
+                    <option value="+420">+420</option> <!-- Česká republika -->
+                    <option value="+43">+43</option> <!-- Rakúsko -->
+                    <option value="+36">+36</option> <!-- Maďarsko -->
+                    <option value="+48">+48</option> <!-- Poľsko -->
+                    <option value="+49">+49</option> <!-- Nemecko -->
+                    <option value="+386">+386</option> <!-- Slovinsko -->
+                    <option value="+40">+40</option> <!-- Rumunsko -->
+                    <option value="+385">+385</option> <!-- Chorvátsko -->
+                    <option value="+387">+387</option> <!-- Bosna a Hercegovina -->
+                    <option value="+381">+381</option> <!-- Srbsko -->
+                    <option value="+359">+359</option> <!-- Bulharsko -->
+                </select>
+
+                <label for="telefon"></label>
+                <input type="tel" id="telefon" placeholder="napr. 928082233" name="telefon"
+                    onkeyup="validateIsEmpty('Telefonne cislo je povinne', 'telefon', 'err-telefon')">
+                <span class="err-msg default-hidden" id="err-telefon">.</span>
+
+            </div>
+
+
+            <div class="rigt_column">
+                <!-- brand model version -->
+                <label for="brand">Značka:</label>
+                <select id="brand" onchange="setModels()">
+                    <option value="skoda">Škoda</option>
+                    <option value="audi">Audi</option>
+                </select><br><br>
+
+
+                <label for="model">Model:</label>
+                <select id="model" onchange="setVersions()">
+
+                </select><br><br>
+
+                <label for="version">Verzia:</label>
+                <select id="version">
+
+                </select><br><br>
+
+
+                <!-- Days -->
+                <div class="radio-container">
+                    <label>
+                        <input type="radio" name="day" id="day" value="one_day" onchange="lenghtCheck()" checked> Jeden den
+                    </label>
+                    <label>
+                        <input type="radio" name="day" id="days" value="multiple_days" onchange="lenghtCheck()">
+                        Viac dni
+                    </label>
+                </div>
+
+
+                <!-- Takeout date -->
+                <label for="takeDate">*Datum prevzatia:</label>
+                <input type="date" id="takeDate" name="takeDate" onchange="updateGiveDateMin()">
+                <span class="err-msg default-hidden" id="err-takeDate">.</span>
+
+                <!-- Give back date (depending on the conditions, you may or may not need this validation) -->
+                <label for="giveDate" id="giveDateLabel">*Datum vratenia:</label>
+                <input type="date" id="giveDate" name="giveDate">
+                <span class="err-msg default-hidden" id="err-giveDate">.</span>
+
+                <!-- Takeout time -->
+                <label for="casPrevzatia">Čas prevzatia:</label>
+                <select id="casPrevzatia" name="casPrevzatia">
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                </select>
+
+
+
+                <!-- car model -->
+                <p>Aku značku auta máte doma?</p>
+
+                <div class="checkbox-container">
+                    <div>
+                        <label>
+                            <input type="checkbox" name="car" value="audi"> Audi
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="car" value="skoda"> Skoda
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="car" id="other" value="other" onchange="otherCheckboxCheck()">
+                            Inu
+                        </label>
+                    </div>
+
+                    <textarea id="otherInput" rows="4" cols="10"></textarea>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <hr>
+    
+
+        <button type="button" id="continueButton" onclick="validateForm()">Pokračovať</button>
+        <span id="totalPrice">0€</span>
+
+        <div id="summaryModal" class="modal">
+            <div class="modal-content">
+                <h2>Sumarizácia údajov</h2>
+                <div id="summaryContent"></div>
+                <input type="submit" id="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+    
+
+    <script src="zoznamLogic.js"></script>
+</body>
+
+
+
+</html>
